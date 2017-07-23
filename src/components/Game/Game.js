@@ -10,27 +10,33 @@ const GAME_HEIGHT = 1000;
 const GAME_WIDTH = 3000;
 
 class Game extends Component {
-    constructor() {
+
+  constructor() {
     super();
 
     const ground = {
       h: 100
     }
 
-    this.state = {
-      game: {
+    const game = {
         x: 0,
         y: 0,
         h: GAME_HEIGHT,
         w: GAME_WIDTH
-      },
-      player: {
+    }
+
+    const player = {
         h: 60,
         w: 30,
-        x: 500,
-        y: GAME_HEIGHT - ground.h - 60
-      },
-      ground
+        x: 100,
+    }
+
+    player.y = GAME_HEIGHT - ground.h - player.h
+
+    this.state = {
+      ground,
+      game,
+      player
     }
 
     this.loop = this.loop.bind(this);
@@ -46,15 +52,20 @@ class Game extends Component {
     //move player x-many pixels, based on key pressed
     let xDelta = 0;
     if (this.props.keyMap.ArrowRight) {
-      xDelta = 3;
+      xDelta = 4;
     } else if (this.props.keyMap.ArrowLeft) {
-      xDelta = -3;
+      xDelta = -4;
     }
     //create new player state
     const player = {
       ...this.state.player,
       x: this.state.player.x + xDelta,
     };
+
+    if (player.x < 0) {
+      player.x = 0;
+    }
+
     const h = window.innerHeight;
     const w = window.innerWidth;
     //create new game state
@@ -62,10 +73,9 @@ class Game extends Component {
       //since we cant move the game,
       //we move the game into it.
       ...this.state.game,
-      x: w/2 - player.x,
+      x: (player.x < w/2) ? 0 : w/2 - player.x,
       y: h - this.state.ground.h - player.y,
     };
-
 
     this.setState({
       ...this.state,
