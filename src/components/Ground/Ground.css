@@ -1,6 +1,3 @@
 ground.entity {
-  top: 570px;
-  width: 100%;
-  height: 30px;
-  background-color: limegreen;
+  background: url('/assets/ground.png');
 }

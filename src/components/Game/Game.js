@@ -6,20 +6,31 @@ import Ground from '../Ground/Ground';
 
 import './Game.css';
 
+const GAME_HEIGHT = 1000;
+const GAME_WIDTH = 3000;
 
 class Game extends Component {
     constructor() {
     super();
 
+    const ground = {
+      h: 100
+    }
+
     this.state = {
-      viewport: {
+      game: {
         x: 0,
-        y: 0
+        y: 0,
+        h: GAME_HEIGHT,
+        w: GAME_WIDTH
       },
       player: {
-        x: 135,
-        y: 510
-      }
+        h: 60,
+        w: 30,
+        x: 500,
+        y: GAME_HEIGHT - ground.h - 60
+      },
+      ground
     }
 
     this.loop = this.loop.bind(this);
@@ -41,19 +52,24 @@ class Game extends Component {
     }
     //create new player state
     const player = {
+      ...this.state.player,
       x: this.state.player.x + xDelta,
-      y: this.state.player.y
     };
-    //create new viewport state
-    const viewport = {
-      //since we cant move the viewport,
+    const h = window.innerHeight;
+    const w = window.innerWidth;
+    //create new game state
+    const game = {
+      //since we cant move the game,
       //we move the game into it.
-      x: window.innerWidth/2 - player.x,
-      y: window.innerHeight/2 - player.y
+      ...this.state.game,
+      x: w/2 - player.x,
+      y: h - this.state.ground.h - player.y,
     };
 
+
     this.setState({
-      viewport,
+      ...this.state,
+      game,
       player
     });
   }
@@ -62,10 +78,21 @@ class Game extends Component {
 
   render() {
     return (
-      <game className="entity" style={{ top: this.state.viewport.y, left: this.state.viewport.x }}>
-        <Background />
-        <Ground />
-        <Player pos={this.state.player} />
+      <game
+        className="entity"
+        style={{
+          top: this.state.game.y,
+          left: this.state.game.x,
+          height: this.state.game.h,
+          width: this.state.game.w
+        }}
+      >
+        <Background game={this.state.game} />
+        <Ground game={this.state.game} details={this.state.ground} />
+        <Player
+          details={this.state.player}
+          game={this.state.game}
+         />
       </game>
     )
   }

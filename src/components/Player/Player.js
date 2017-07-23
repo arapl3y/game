@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import './Player.css';
 
 class Player extends Component {
-
-
   render() {
     return (
-      <player className="entity" style={{ top: this.props.pos.y, left: this.props.pos.x }}>
+      <player
+        className="entity"
+        style={{
+          top: this.props.details.y,
+          left: this.props.details.x,
+          width: this.props.details.w,
+          height: this.props.details.h
+        }}
+        >
 
       </player>
     )
