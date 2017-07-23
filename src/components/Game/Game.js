@@ -26,8 +26,8 @@ class Game extends Component {
     }
 
     const player = {
-        h: 60,
-        w: 30,
+        h: 70,
+        w: 50,
         x: 100,
     }
 

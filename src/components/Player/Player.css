@@ -1,3 +1,4 @@
 player.entity {
-  background-color: salmon;
+  background-image: url('/assets/player.png');
+  background-position: -495px -13px;
 }
