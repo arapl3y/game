@@ -1,3 +1,7 @@
+html, body {
+  overflow: hidden;
+}
+
 .entity {
   position: absolute;
   top: 0;
